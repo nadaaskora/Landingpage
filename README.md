@@ -18,6 +18,6 @@ For specific, detailed instructions, look at the project instructions in the Uda
 - Scroll to the top.
 
 ## Refrences 
-*[Scroll back to top button](https://www.w3schools.com/howto/howto_js_scroll_to_top.asp)
-*[scroll into view](https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView)
-*[Smooth Active Nav](https://css-tricks.com/sticky-smooth-active-nav/)
+* [Scroll back to top button](https://www.w3schools.com/howto/howto_js_scroll_to_top.asp)
+* [scroll into view](https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView)
+* [Smooth Active Nav](https://css-tricks.com/sticky-smooth-active-nav/)
