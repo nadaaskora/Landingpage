@@ -21,13 +21,56 @@ const navbarList = document.querySelector(".navbar__list");
 const navbarListLink = document.querySelectorAll("a");
 const menuButton = document.querySelector(".menu-btn");
 const sections = document.querySelectorAll("section");
+let mainNavLinks = document.querySelectorAll(".link");
 
 /**
  * End Global Variables
  * Start Helper Functions
  *
  */
+function getActiveElem() {
+  maxSection = sections[0];
+  minVal = 1000000;
+  for (let item of sections) {
+    let boundaries = item.getBoundingClientRect();
+    if ((boundaries.top > -300) & (boundaries.top < minVal)) {
+      minVal = boundaries.top;
+      maxSection = item;
+    }
+  }
+  return maxSection;
+}
+// setActiveSection
+function setActiveSection() {
+  window.section = getActiveElem();
+  section.classList.add("your-active-class");
+}
+// removeInactiveSections
+function removeInactiveSections() {
+  for (let item of sections) {
+    if (item.classList.contains("your-active-class")) {
+      item.classList.remove("your-active-class");
+      continue;
+    }
+  }
+}
 
+// header style
+function headerStyle() {
+  // set corresponding header style
+  const active = document.querySelector('a[data-link="' + section.id + '"]');
+  active.classList.add("active");
+  // remove from other headers
+  const mainNavLinks = document.querySelectorAll(".link");
+  for (let item of mainNavLinks) {
+    if (
+      (item.dataset.link != active.dataset.link) &
+      item.classList.contains("active")
+    ) {
+      item.classList.remove("active");
+    }
+  }
+}
 /**
  * End Helper Functions
  * Begin Main Functions
@@ -41,31 +84,18 @@ sections.forEach((el) => {
 });
 
 // Add class 'active' to section when near top of viewport
-function activeSection() {
-  let mainNavLinks = document.querySelectorAll("li a");
-  let mainSections = document.querySelectorAll("section");
-
-  let lastId;
-  let cur = [];
-
-  window.addEventListener("scroll", (event) => {
-    event.preventDefault();
-    let fromTop = window.scrollY;
-
-    mainNavLinks.forEach((link) => {
-      let section = document.querySelector(link.hash);
-
-      if (
-        section.offsetTop <= fromTop &&
-        section.offsetTop + section.offsetHeight > fromTop
-      ) {
-        link.classList.add("active");
-      } else {
-        link.classList.remove("active");
-      }
-    });
+function setActive() {
+  window.addEventListener("scroll", (e) => {
+    e.preventDefault();
+    // set Active Section
+    setActiveSection();
+    // set other sections as inactive
+    removeInactiveSections();
+    // header style
+    headerStyle();
   });
 }
+
 // Scroll to anchor ID using scrollTO event
 function scrollToClick() {
   navbarList.addEventListener("click", (e) => {
@@ -99,7 +129,7 @@ navbarListLink.forEach((link) => link.addEventListener("click", hideMenu));
 // Scroll to section on link click
 scrollToClick();
 // Set sections as active
-activeSection();
+setActive();
 /* Scroll to the top */
 var mybutton = document.getElementById("myBtn");
 
